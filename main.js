@@ -11,12 +11,12 @@ function calculadora (dia , ope){
             if(resultado == 4){
                 return 0;
             }else if (resultado < 4){
-                return(7 - resultado);
+                return(4 - resultado);
             }else if (resultado > 4){
-                return(7 - resultado);}
+                return(4 - resultado);}
         }else if (dia > hoy){
             resultado = (31 - dia) + hoy - 4;
-            return(resultado);
+            return(resultado*(-1));
         }
 
     case "FERTILIZANTE":
@@ -30,9 +30,9 @@ function calculadora (dia , ope){
                 return(7 - resultado);
             }else if (resultado > 7){
                 return(7 - resultado);}
-        }else if (dia > date){
+        }else if (dia > hoy){
             resultado = (31 - dia) + hoy - 7;
-            return(resultado);
+            return(resultado*(-1));
         }
 
     default:
@@ -45,7 +45,7 @@ var cant = parseInt(prompt("¿Cuantos plantas posee?"));
 for (let i = 1; i <= cant; i++){
     var dia = parseInt(prompt("¿Que número de día del mes regó la planta" + i + "?"));
     let tipo = prompt("Agua o fertilizante");
-    tipo = tipo.toUpperCase;
+    tipo = tipo.toUpperCase();
 
     while (tipo != "AGUA" && tipo != "FERTILIZANTE"){
         tipo = prompt("Ingrese Agua o fertilizante");   
