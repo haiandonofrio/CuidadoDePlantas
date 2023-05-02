@@ -2,8 +2,6 @@ function calculadora(dia,plantausuario){
     const date = new Date();
     let hoy = parseInt(date.getDate());
     let resultado = 0;
-    // switch(ope){
-    // case "AGUA":
         if(dia == hoy){
             return(plantausuario.dias);
         }else if (dia < hoy){
@@ -47,6 +45,7 @@ const catalogoplantas = [
     new planta("Margarita", "exterior", "agua", "tierra", 5),
 ]
 
+// Esto seria para que pueda ver las plantas en la pantalla y elegir
 console.log(catalogoplantas);
 
 var cant = Number(prompt("¿Cuantas plantas posee?"));
@@ -58,6 +57,7 @@ const listadoplantasusuario = [];
 for (let i = 1; i <= cant; i++){
     var dia = parseInt(prompt("¿Que número de día del mes regó la planta" + i + "?"));
 
+    //Valido que el dia del mes sea correcto
         while (dia < 1 || dia > 31 || isNaN(dia)){
         dia= prompt("Ingrese un día del mes valido");   
     }
@@ -86,7 +86,7 @@ for (let i = 1; i <= cant; i++){
         } else {
             nuevaplanta = new planta(nombrePlanta, tipo, modoRiego, cultivo, buscoPlanta.dias)
         }
-
+//Añado la nueva planta al array 
         catalogoplantas.push(nuevaplanta);
         regado = parseInt(calculadora(dia, nuevaplanta));
 
@@ -137,6 +137,7 @@ listadoplantasusuario.sort((a, b) => {
     return 0;
 })
 
+//Muestro un detalle final con toda la informacion
 console.log(listadoplantasusuario)
 
 
