@@ -18,34 +18,14 @@ function calculadora(dia,plantausuario){
             resultado = (31 - dia) + hoy - plantausuario.dias;
             return(resultado*(-1));
         }
-
-//     case "FERTILIZANTE":
-//         if(dia == hoy){
-//             return(7);
-//         }else if (dia < hoy){
-//             resultado = hoy - dia;
-//             if(resultado == 7){
-//                 return 0;
-//             }else if (resultado < 7){
-//                 return(7 - resultado);
-//             }else if (resultado > 7){
-//                 return(7 - resultado);}
-//         }else if (dia > hoy){
-//             resultado = (31 - dia) + hoy - 7;
-//             return(resultado*(-1));
-//         }
-
-//     default:
-//         return (console.log("No ingresó un tipo de riego admitido"));
-// }
 }
 
 
-let tipo = ["interior", "exterior"];
+// let tipo = ["interior", "exterior"];
 
-let riego = ["sustrato", "tierra", "hidroponia"];
+// let riego = ["sustrato", "tierra", "hidroponia"];
 
-let dias = [12,33,44,65];
+// let dias = [12,33,44,65];
 
 
 class planta {
@@ -101,44 +81,46 @@ for (let i = 1; i <= cant; i++){
 
         const buscoPlanta = catalogoplantas.find((p) => p.riego === modoRiego && p.cultivo === cultivo)
         if (typeof buscoPlanta === "undefined") {
-            let diasRiego = prompt("¿Cada cuanto riega su planta?")
-            const nuevaplanta = new planta(nombrePlanta, tipo, modoRiego, cultivo, diasRiego)
+            let diasRiego = prompt("¿Cada cuantos días riega su planta?")
+            nuevaplanta = new planta(nombrePlanta, tipo, modoRiego, cultivo, diasRiego)
         } else {
             nuevaplanta = new planta(nombrePlanta, tipo, modoRiego, cultivo, buscoPlanta.dias)
         }
+
+        catalogoplantas.push(nuevaplanta);
         regado = parseInt(calculadora(dia, nuevaplanta));
 
             if (regado == 0) {
-        let seRiega = "Debe regar la planta " + nuevaplanta.nombre + " hoy";
+        let seRiega = "Debe regar la planta " + nombrePlanta + " hoy";
         alert(seRiega);
     }else if (regado < 0){
         regado = regado * (-1);
-        seRiega = "Debió regar la planta " + nuevaplanta.nombre + " hace " + regado + " días.";
+        seRiega = "Debió regar la planta " + nombrePlanta + " hace " + regado + " días.";
         alert(seRiega);
     } else if (regado > 0) {
-        seRiega = "Debe regar la planta " + nuevaplanta.nombre + " en " + regado + " días."
+        seRiega = "Debe regar la planta " + nombrePlanta + " en " + regado + " días."
         alert(seRiega);
     }
 
-    const plantaUsuarioListado = new planta(nuevaplanta.nombre,nuevaplanta.tipo,nuevaplanta.riego,nuevaplanta.cultivo, seRiega )    
-    listadoplantasusuario.push(plantaUsuarioListado);
+    const plantaUsuarioObjeto = new planta(nuevaplanta.nombre,nuevaplanta.tipo,nuevaplanta.riego,nuevaplanta.cultivo, seRiega )    
+    listadoplantasusuario.push(plantaUsuarioObjeto);
     } else {
         regado = parseInt(calculadora(dia, plantausuario));
 
             if (regado == 0) {
-        let seRiega = "Debe regar la planta " + plantausuario.nombre + " hoy";
+        let seRiega = "Debe regar la planta " + nombrePlanta + " hoy";
         alert(seRiega);
     }else if (regado < 0){
         regado = regado * (-1);
-        seRiega = "Debió regar la planta " + plantausuario.nombre + " hace " + regado + " días.";
+        seRiega = "Debió regar la planta " + nombrePlanta + " hace " + regado + " días.";
         alert(seRiega);
     } else if (regado > 0) {
-        seRiega = "Debe regar la planta " + plantausuario.nombre + " en " + regado + " días."
+        seRiega = "Debe regar la planta " + nombrePlanta + " en " + regado + " días."
         alert(seRiega);
     }
 
-    const plantaUsuarioListado = new planta(plantausuario.nombre,plantausuario.tipo,plantausuario.riego,plantausuario.cultivo, seRiega )    
-    listadoplantasusuario.push(plantaUsuarioListado);
+    const plantaUsuarioObjeto = new planta(plantausuario.nombre,plantausuario.tipo,plantausuario.riego,plantausuario.cultivo, seRiega )    
+    listadoplantasusuario.push(plantaUsuarioObjeto);
     }
     
 
@@ -151,12 +133,12 @@ listadoplantasusuario.sort((a, b) => {
     if (a.name < b.name) {
         return -1;
     }
-    // a es igual a b
+
     return 0;
 })
 
 console.log(listadoplantasusuario)
-// let consulta = prompt("")
+
 
 
 
