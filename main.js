@@ -1,3 +1,4 @@
+/////////////CLASES/
 class planta {
     constructor(nombre, tipo, riego, cultivo, dias, img) {
         this.nombre = nombre.toUpperCase();
@@ -9,6 +10,16 @@ class planta {
     }
 }
 
+class nuevaplanta {
+    constructor(nombre, tipo, riego, cultivo, dias, img) {
+        this.nombre = nombre;
+        this.tipo = tipo;
+        this.riego = riego;
+        this.cultivo = cultivo;
+        this.dias = dias;
+        this.img = img;
+    }
+}
 /////////////DECLARACIONES/
 const catalogoplantas = [
     new planta("Cacao", "interior", "fertilizante", "sustrato", 7, 'cacao.jpg'),
@@ -25,40 +36,50 @@ function calculadora(dia, plantausuario) {
     const date = new Date();
     let hoy = parseInt(date.getDate());
     let resultado = 0;
-        if(dia == hoy){
-            return(plantausuario.dias);
-        }else if (dia < hoy){
-            resultado = hoy - dia;
-            if(resultado == plantausuario.dias){
-                return 0;
-            }else if (resultado < plantausuario.dias){
-                return(plantausuario.dias - resultado);
-            }else if (resultado > plantausuario.dias){
-                return(plantausuario.dias - resultado);}
-        }else if (dia > hoy){
+    if (dia == hoy) {
+        // return(plantausuario.dias);
+        resultado = plantausuario.dias;
+    } else if (dia < hoy) {
+        resultado = hoy - dia;
+        if (resultado == plantausuario.dias) {
+            // return 0;
+            resultado = 0;
+                
+        } else if (resultado < plantausuario.dias) {
+            // return(plantausuario.dias - resultado);
+            resultado = plantausuario.dias - resultado;
+        } else if (resultado > plantausuario.dias) {
+            // return(plantausuario.dias - resultado);}
+            resultado = plantausuario.dias - resultado;
+        } else if (dia > hoy) {
             resultado = (31 - dia) + hoy - plantausuario.dias;
-            return(resultado*(-1));
+            resultado = resultado * (-1);
         }
-}
+    }
+            
+        let riego = document.getElementById("riego");
+        let div = document.createElement("div");
+        let parrafo = document.getElementById("parrafo");
+        if (parrafo != null) {
+            parrafo.remove();
+        };
+        if (resultado == 0) {
+            div.innerHTML = `<p id="parrafo">  Debe regar ${plantausuario.nombre} hoy. </p>`;
+        } else if (resultado < 0) {
+            resultado = resultado * (-1);
+            div.innerHTML = `<p id="parrafo">  Debió regar ${plantausuario.nombre} hace ${resultado} días. </p>`;
+        } else if (resultado > 0) {
+            div.innerHTML = `<p id="parrafo">  Debe regar ${plantausuario.nombre} en ${resultado} días. </p>`;
+        }
+        div.className = "px-2  d-flex flex-column justify-content-center align-items-center filter";
+        riego.appendChild(div);
+    }
 
-// function riego(e,nombrePlanta) {
-//     const target = e.target.closest(`#${nombrePlanta}`); 
 
-//     if (target) {
-//         const planta = catalogoplantas.find((p) => p.nombre === nombrePlanta)
-//         let riegonombre = document.getElementById('riegonombre');
-//         riegonombre.innerHTML = `${planta.nombre}`;
-//         let riegoriego = document.getElementById('riegoriego');
-//         riegoriego.innerHTML = `${planta.riego}`;
-//         let riegodias = document.getElementById('riegodias');
-//         riegodias.innerHTML = `Se riega cada ${planta.dias} días`;
-//         let sectionriego = document.getElementById('riego');
-//         sectionriego.classList.remove('no-display')
-//     }
-// }
 function filter(e) {
 
-
+    let sectioncrear = document.getElementById('sectioncrear');
+    sectioncrear.classList.add('no-display');
     let input     = document.getElementById("tipoPlanta")
     input.addEventListener("input", () => {
     localStorage.setItem("tipoPlanta", input.value)
@@ -68,7 +89,14 @@ function filter(e) {
     let filterlog;
     let botonriego = {};
     let tipoPlanta = localStorage.getItem('tipoPlanta');
-    const plantafilter = catalogoplantas.filter((p) => p.tipo === tipoPlanta);
+    let plantas = localStorage.getItem('catalogoplantas');
+    let plantafilter = [];
+    // if (plantas != null) {
+    //     plantafilter = plantas.filter((p) => p.tipo === tipoPlanta);
+    // } else {
+        plantafilter = catalogoplantas.filter((p) => p.tipo === tipoPlanta);
+    // }
+    
     let catalogo = document.getElementById("catalogo");
     let img = document.getElementsByClassName("img");
     if (img.length == 0 || tipoPlanta != filterlog) {
@@ -94,7 +122,10 @@ function filter(e) {
             // if (botonriego[planta.nombre.toUpperCase()] != null) {
             botonriego[planta.nombre.toUpperCase()].addEventListener('click', function (event){
                 if (event.target.tagName.toLowerCase() === 'button') {
-                    // alert(event.target.id);
+                    let parrafo = document.getElementById("parrafo");
+                    if (parrafo != null) {
+                        parrafo.remove();
+                    };
                     const planta = catalogoplantas.find((p) => p.nombre === event.target.id)
                     let riegonombre = document.getElementById('riegonombre');
                     riegonombre.innerHTML = `${planta.nombre}`;
@@ -104,50 +135,16 @@ function filter(e) {
                     riegodias.innerHTML = `Se riega cada ${planta.dias} días`;
                     let sectionriego = document.getElementById('riego');
                     sectionriego.classList.remove('no-display')
+                    sessionStorage.setItem("CalculoPlanta",event.target.id )
                 }
             },true);
-            // }
         }
         
-
-        // for (const planta2 of catalogoplantas){
-        //     botonriego[planta2.nombre.toUpperCase()] = document.getElementById(planta2.nombre.toUpperCase());
-        //     if (botonriego[planta2.nombre.toUpperCase()] != null) {
-        //         botonriego[planta2.nombre.toUpperCase()].addEventListener('click', riego(e,planta2.nombre.toUpperCase()));
-        //     }
-        // }
-
 
     } else {
         e.preventDefault()
         }
 }
-
-    // let botonriegocacao = document.getElementById('CACAO');
-    // if (botonriegocacao != null){
-    //     botonriegocacao.addEventListener('click', riego("CACAO"));
-    // }
-    // let botonriegomenta = document.getElementById('MENTA');
-    // if (botonriegomenta != null) {
-    //     botonriegomenta.addEventListener('click', riego);
-    // }
-    // let botonriegotuli = document.getElementById('TULIPAN');
-    // if (botonriegotuli != null) {
-    //     botonriegotuli.addEventListener('click', riego);
-    // }
-    // let botonriegogirasol = document.getElementById('GIRASOL');
-    // if (botonriegogirasol != null) {
-    //     botonriegogirasol.addEventListener('click', riego);
-    // }
-    // let botonriegorosa = document.getElementById('ROSA');
-    // if (botonriegorosa != null) {
-    //     botonriegorosa.addEventListener('click', riego);
-    // }
-    // let botonriegomarga = document.getElementById('MARGARITA');
-    // if (botonriegomarga != null) {
-    //     botonriegomarga.addEventListener('click', riego);
-    // }
-/////////////CLASES/
 
 ///////////EVENTOS/
 
@@ -156,7 +153,59 @@ let botonfilter = document.getElementById('filter');
 botonfilter.addEventListener('click', filter);
 
 let botonriego = document.getElementById('btnriego');
-botonriego.addEventListener('click', calculadora);
+botonriego.addEventListener('click', function (event) {
+        let sectioncrear = document.getElementById('sectioncrear');
+        sectioncrear.classList.add('no-display');
+        let nombrePlanta = sessionStorage.getItem('CalculoPlanta');
+        let dia = document.getElementById('riegoinput');
+        const plantausuario = catalogoplantas.find((p) => p.nombre === nombrePlanta);
+        calculadora(dia.value, plantausuario);
+
+    });
+
+    let botoncrear = document.getElementById('crear');
+    
+    botoncrear.addEventListener('click', function (event) {
+    let sectioncrear = document.getElementById('sectioncrear');
+    sectioncrear.classList.remove('no-display');
+    let sectionriegoini = document.getElementById('riego');
+    sectionriegoini.classList.add('no-display');
+    let divdelete = document.getElementsByClassName("filter");
+    const divlenght = divdelete.length;
+    for (let i = 0; i < divlenght; i++) {
+        divdelete[0].remove();
+    }
+    let creartipo = document.getElementById('crearPlanta');
+    localStorage.setItem('crearPlanta', creartipo.value);
+});
+
+let botonconfirmar = document.getElementById('confirmarcrear');
+
+botonconfirmar.addEventListener('click', function (event) {
+    if (event.target.tagName.toLowerCase() === 'button') {
+        let tipo = localStorage.getItem('crearPlanta');
+        let nombre = document.getElementById('crearnombre');
+        let riego = document.getElementById('crearriego');
+        let cultivo = document.getElementById('crearcultivo');
+        let dias = document.getElementById('creardias');
+        let img = document.getElementById('crearimg');
+
+        const nuevaplanta = new planta(nombre.value, tipo, riego.value, cultivo.value, dias.value, img.value);
+            catalogoplantas.push(nuevaplanta);
+        localStorage.setItem('catalogoplantas', JSON.stringify(catalogoplantas));
+        let sectioncrear = document.getElementById('sectioncrear');
+        let plantacreada = document.getElementById('plantacreada');
+        if (plantacreada != null) {
+            plantacreada.remove();
+        }
+        // Esto sera un alert luego 
+        let div = document.createElement("div");
+        div.innerHTML = `<p id="plantacreada"> Su Planta se ha ingresado exitosamente en nuestro sistema</p>`
+            ;
+        div.className = "text-center";
+        sectioncrear.appendChild(div);
+    }
+} );
 // // Esto seria para que pueda ver las plantas en la pantalla y elegir
 // console.log(catalogoplantas);
 
@@ -273,10 +322,4 @@ botonriego.addEventListener('click', calculadora);
 // for (const pagina of paginas) {
 //     pagina.className = "textocentrado"
 // }
-// const content = element.innerHTML;
-
-
-
-
-
-
+// const content = element.innerHTML

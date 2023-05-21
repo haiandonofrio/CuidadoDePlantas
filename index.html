@@ -58,6 +58,14 @@
       </select>
     </div>
     <button id="filter">Buscar</button>
+        <div class="input-group mb-3">
+          <label class="input-group-text" for="crearPlanta">Puede también crear su planta!</label>
+          <select class="form-select" id="crearPlanta">
+            <option value="INTERIOR">Interior</option>
+            <option value="EXTERIOR">Exterior</option>
+          </select>
+        </div>
+        <button id="crear">Crear</button>
     <section id="catalogo" class="container">
     </section>
     <section id="riego" class="no-display">
@@ -69,6 +77,23 @@
       <div id="riegohelp" class="form-text">Nuestro algoritmo le indicará cuando debería regar su planta.</div>
       <button id="btnriego">Calcular</button>
       
+    </section>
+    <section id="sectioncrear" class="no-display">
+      <form action="" class="">
+      <label for="crearnombre" class="col-12">Indique el nombre de su planta</label><br>
+      <input type="text" id="crearnombre" name="crearnombre"  size="30" required><br><br>
+      <label for="crearriego" >Indique el tipo de riego que utiliza</label><br>
+      <input type="text" id="crearriego" name="crearriego"  size="30" required><br><br>
+      <label for="crearcultivo">Indique el tipo de cultivo que realiza</label><br>
+      <input type="text" id="crearcultivo" name="crearcultivo"  size="30" required><br><br>
+      <label for="creardias">Indique cada cuantos días riega su planta normalmente</label><br>
+      <input type="number" id="creardias" name="creardias" maxlength="2" size="5" required><br><br>
+      <div class="input-group">
+        <input type="file" class="form-control" id="crearimg" aria-describedby="inputGroupFileAddon04" aria-label="Upload">
+              <!-- <button class="btn btn-outline-secondary" type="button" id="crearimgbtn"></button> -->
+      </div><br><br>
+      <button id="confirmarcrear" class="col-4 mb-5" size="15" >Ingresar planta</button>
+    </form>
     </section>
     </main>
 <footer>
