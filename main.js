@@ -20,8 +20,8 @@ class nuevaplanta {
         this.img = img;
     }
 }
-/////////////DECLARACIONES/
-const catalogoplantas = [
+///////////DECLARACIONES/
+let catalogoplantas = [
     new planta("Cacao", "interior", "fertilizante", "sustrato", 7, 'cacao.jpg'),
     new planta("Menta", "interior", "fertilizante", "hidro", 10, 'menta.png'),
     new planta("Tulipan", "exterior", "agua", "tierra", 5, 'tulipan.jfif'),
@@ -30,6 +30,10 @@ const catalogoplantas = [
     new planta("Margarita", "exterior", "agua", "tierra", 5, 'margarita.jfif'),
 ]
 
+const catalogoLS = JSON.parse(localStorage.getItem('catalogoplantas'));
+if (catalogoLS) {
+    catalogoplantas = catalogoLS;
+};
 ////////FUNCIONES/
 
 function calculadora(dia, plantausuario) {
@@ -42,14 +46,11 @@ function calculadora(dia, plantausuario) {
     } else if (dia < hoy) {
         resultado = hoy - dia;
         if (resultado == plantausuario.dias) {
-            // return 0;
             resultado = 0;
                 
         } else if (resultado < plantausuario.dias) {
-            // return(plantausuario.dias - resultado);
             resultado = plantausuario.dias - resultado;
         } else if (resultado > plantausuario.dias) {
-            // return(plantausuario.dias - resultado);}
             resultado = plantausuario.dias - resultado;
         } else if (dia > hoy) {
             resultado = (31 - dia) + hoy - plantausuario.dias;
@@ -57,45 +58,56 @@ function calculadora(dia, plantausuario) {
         }
     }
             
-        let riego = document.getElementById("riego");
-        let div = document.createElement("div");
         let parrafo = document.getElementById("parrafo");
         if (parrafo != null) {
             parrafo.remove();
         };
+
+            // Esto sera un alert luego 
+        const modalConteiner = document.getElementById("modalConteiner");
+        modalConteiner.innerHTML="";
+        modalConteiner.style.display = "flex";
+        const modalPlanta = document.createElement("div");
+        modalPlanta.className = "modal-carrito";
         if (resultado == 0) {
-            div.innerHTML = `<p id="parrafo">  Debe regar ${plantausuario.nombre} hoy. </p>`;
+            modalPlanta.innerHTML = `<p id="parrafo">  Debe regar ${plantausuario.nombre} hoy. </p>`;
         } else if (resultado < 0) {
             resultado = resultado * (-1);
-            div.innerHTML = `<p id="parrafo">  Debió regar ${plantausuario.nombre} hace ${resultado} días. </p>`;
+            modalPlanta.innerHTML = `<p id="parrafo">  Debió regar ${plantausuario.nombre} hace ${resultado} días. </p>`;
         } else if (resultado > 0) {
-            div.innerHTML = `<p id="parrafo">  Debe regar ${plantausuario.nombre} en ${resultado} días. </p>`;
+            modalPlanta.innerHTML = `<p id="parrafo">  Debe regar ${plantausuario.nombre} en ${resultado} días. </p>`;
         }
-        div.className = "px-2  d-flex flex-column justify-content-center align-items-center filter";
-        riego.appendChild(div);
+        modalConteiner.append(modalPlanta);
+
+    //////// booton
+        const boton = document.createElement("h1");
+        boton.innerText = "X";
+        boton.className = "boton-x";
+        boton.addEventListener ("click", () =>{
+            modalConteiner.style.display= "none";
+        })
+        modalPlanta.append(boton);
     }
+    
 
 
 function filter(e) {
 
     let sectioncrear = document.getElementById('sectioncrear');
     sectioncrear.classList.add('no-display');
-    let input     = document.getElementById("tipoPlanta")
-    input.addEventListener("input", () => {
-    localStorage.setItem("tipoPlanta", input.value)
-    
-})
-
     let filterlog;
-    let botonriego = {};
-    let tipoPlanta = localStorage.getItem('tipoPlanta');
-    let plantas = localStorage.getItem('catalogoplantas');
+    let botonriego = {};            
+    let tipoPlanta = sessionStorage.getItem('tipoPlanta');
+    const catalogoLS = JSON.parse(localStorage.getItem('catalogoplantas'));
+    if (catalogoLS) {
+        catalogoplantas = catalogoLS;
+    }
     let plantafilter = [];
-    // if (plantas != null) {
-    //     plantafilter = plantas.filter((p) => p.tipo === tipoPlanta);
-    // } else {
+
+    if (tipoPlanta == null) {
+        tipoPlanta = "INTERIOR";
+    };
         plantafilter = catalogoplantas.filter((p) => p.tipo === tipoPlanta);
-    // }
     
     let catalogo = document.getElementById("catalogo");
     let img = document.getElementsByClassName("img");
@@ -112,14 +124,29 @@ function filter(e) {
         }
         for (const planta of plantafilter) {
             let div = document.createElement("div");
+            div.id = planta.nombre + "id";
             div.innerHTML = `<img class="img tamaño" src="./assets/img/${planta.img}" alt="${planta.nombre}">
                     <p>  Planta: ${planta.nombre}   </p>
-                    <button id="${planta.nombre}">Calcular Riego</button>`
-                    ;
+                    <button id="${planta.nombre}">Calcular Riego</button>
+                    <button id="${planta.nombre}del">Eliminar del catálogo</button>`
+                ;
+
             div.className = "px-2  d-flex flex-column justify-content-center align-items-center filter";
             catalogo.appendChild(div);
+            const boton = document.getElementById(planta.nombre + "del")
+            boton.addEventListener("click", (event) => {
+                if (event.target.tagName.toLowerCase() === 'button') {
+                    const deleteplanta = document.getElementById(planta.nombre + "id");
+                    deleteplanta.remove();
+                    const catalogoLS = JSON.parse(localStorage.getItem('catalogoplantas'));
+                    catalogoLS.splice(catalogoLS.findIndex(a => a.nombre === planta.nombre) , 1)
+                    localStorage.setItem('catalogoplantas', JSON.stringify(catalogoLS));
+                    catalogo = catalogoLS;
+                    const riego = document.getElementById("riego");
+                    riego.classList.add("no-display");
+                }
+            });
             botonriego[planta.nombre.toUpperCase()] = document.getElementById(planta.nombre.toUpperCase());
-            // if (botonriego[planta.nombre.toUpperCase()] != null) {
             botonriego[planta.nombre.toUpperCase()].addEventListener('click', function (event){
                 if (event.target.tagName.toLowerCase() === 'button') {
                     let parrafo = document.getElementById("parrafo");
@@ -147,12 +174,17 @@ function filter(e) {
 }
 
 ///////////EVENTOS/
+const inputplanta     = document.getElementById("tipoPlanta")
+    inputplanta.addEventListener("input", () => {
+        sessionStorage.setItem("tipoPlanta", inputplanta.value)
+    
+    });
 
-let botonfilter = document.getElementById('filter');
+const botonfilter = document.getElementById('filter');
 
 botonfilter.addEventListener('click', filter);
 
-let botonriego = document.getElementById('btnriego');
+const botonriego = document.getElementById('btnriego');
 botonriego.addEventListener('click', function (event) {
         let sectioncrear = document.getElementById('sectioncrear');
         sectioncrear.classList.add('no-display');
@@ -163,7 +195,7 @@ botonriego.addEventListener('click', function (event) {
 
     });
 
-    let botoncrear = document.getElementById('crear');
+    const botoncrear = document.getElementById('crear');
     
     botoncrear.addEventListener('click', function (event) {
     let sectioncrear = document.getElementById('sectioncrear');
@@ -179,7 +211,7 @@ botonriego.addEventListener('click', function (event) {
     localStorage.setItem('crearPlanta', creartipo.value);
 });
 
-let botonconfirmar = document.getElementById('confirmarcrear');
+const botonconfirmar = document.getElementById('confirmarcrear');
 
 botonconfirmar.addEventListener('click', function (event) {
     if (event.target.tagName.toLowerCase() === 'button') {
@@ -189,137 +221,30 @@ botonconfirmar.addEventListener('click', function (event) {
         let cultivo = document.getElementById('crearcultivo');
         let dias = document.getElementById('creardias');
         let img = document.getElementById('crearimg');
+        const form = document.getElementById('sectioncrear');
+        form.className = "no-display";
+        const plantans = new planta(nombre.value,tipo,riego.value,cultivo.value,dias.value,img.value);
+        
+        const catalogoLS = JSON.parse(localStorage.getItem('catalogoplantas'));
+        catalogoLS.push(plantans);
+        localStorage.setItem('catalogoplantas', JSON.stringify(catalogoLS));
 
-        const nuevaplanta = new planta(nombre.value, tipo, riego.value, cultivo.value, dias.value, img.value);
-            catalogoplantas.push(nuevaplanta);
-        localStorage.setItem('catalogoplantas', JSON.stringify(catalogoplantas));
-        let sectioncrear = document.getElementById('sectioncrear');
-        let plantacreada = document.getElementById('plantacreada');
-        if (plantacreada != null) {
-            plantacreada.remove();
-        }
         // Esto sera un alert luego 
-        let div = document.createElement("div");
-        div.innerHTML = `<p id="plantacreada"> Su Planta se ha ingresado exitosamente en nuestro sistema</p>`
-            ;
-        div.className = "text-center";
-        sectioncrear.appendChild(div);
+        const modalConteiner = document.getElementById("modalConteiner");
+        modalConteiner.innerHTML="";
+        modalConteiner.style.display = "flex";
+        const modalPlanta = document.createElement("div");
+        modalPlanta.className = "modal-carrito";
+        modalPlanta.innerHTML =`<h2 class="modal-carrito-text">Su planta se ha creado exitosamente</h2>`
+        modalConteiner.append(modalPlanta);
+
+    //////// booton
+        const boton = document.createElement("h1");
+        boton.innerText = "X";
+        boton.className = "boton-x";
+        boton.addEventListener ("click", () =>{
+            modalConteiner.style.display= "none";
+        })
+        modalPlanta.append(boton);
     }
 } );
-// // Esto seria para que pueda ver las plantas en la pantalla y elegir
-// console.log(catalogoplantas);
-
-// // var cant = Number(prompt("¿Cuantas plantas posee?"));
-// //         while (isNaN(cant)){
-// //         cant = prompt("Ingrese un número de plantas válido");
-// //     }
-// const listadoplantasusuario = [];
-
-// for (let i = 1; i <= cant; i++){
-//     // var dia = parseInt(prompt("¿Que número de día del mes regó la planta" + i + "?"));
-
-//     //Valido que el dia del mes sea correcto
-//         while (dia < 1 || dia > 31 || isNaN(dia)){
-//         // dia= prompt("Ingrese un día del mes valido");
-//     }
-
-//     // let nombrePlanta = prompt("¿Cual es la planta" + i + " de acuerdo a nuestro catálogo?");
-//     nombrePlanta = nombrePlanta.toUpperCase();
-
-//     const plantausuario = catalogoplantas.find((p) => p.nombre === nombrePlanta)
-
-//     if (typeof plantausuario === "undefined") {
-//         // Aqui la idea seria que si la planta no esta en el catalogo que el usuario la pueda agregar
-//         // nombrePlanta = prompt("La planta ingresada no existe en nuestro catálogo, ingrese el nombre para crearla");
-//         nombrePlanta = nombrePlanta.toUpperCase();
-//         // let tipo = prompt("Que tipo de cultivo tiene(Interior o Exterior)");
-//         tipo = tipo.toUpperCase();
-//         // let modoRiego = prompt("Que tipo de riego usa(Agua o Fertilizante)");
-//         modoRiego = modoRiego.toUpperCase();
-//         // let cultivo = prompt("Que tipo de cultivo usa(tierra, hidro o sustrato)");
-//         cultivo = cultivo.toUpperCase();
-        
-
-//         const buscoPlanta = catalogoplantas.find((p) => p.riego === modoRiego && p.cultivo === cultivo)
-//         if (typeof buscoPlanta === "undefined") {
-//             // let diasRiego = prompt("¿Cada cuantos días riega su planta?")
-//             nuevaplanta = new planta(nombrePlanta, tipo, modoRiego, cultivo, diasRiego)
-//         } else {
-//             nuevaplanta = new planta(nombrePlanta, tipo, modoRiego, cultivo, buscoPlanta.dias)
-//         }
-// //Añado la nueva planta al array
-//         catalogoplantas.push(nuevaplanta);
-//         regado = parseInt(calculadora(dia, nuevaplanta));
-
-//             if (regado == 0) {
-//         let seRiega = "Debe regar la planta " + nombrePlanta + " hoy";
-//         // alert(seRiega);
-//     }else if (regado < 0){
-//         regado = regado * (-1);
-//         seRiega = "Debió regar la planta " + nombrePlanta + " hace " + regado + " días.";
-//         // alert(seRiega);
-//     } else if (regado > 0) {
-//         seRiega = "Debe regar la planta " + nombrePlanta + " en " + regado + " días."
-//         // alert(seRiega);
-//     }
-
-//     const plantaUsuarioObjeto = new planta(nuevaplanta.nombre,nuevaplanta.tipo,nuevaplanta.riego,nuevaplanta.cultivo, seRiega )
-//     listadoplantasusuario.push(plantaUsuarioObjeto);
-//     } else {
-//         regado = parseInt(calculadora(dia, plantausuario));
-
-//             if (regado == 0) {
-//         let seRiega = "Debe regar la planta " + nombrePlanta + " hoy";
-//         // alert(seRiega);
-//     }else if (regado < 0){
-//         regado = regado * (-1);
-//         seRiega = "Debió regar la planta " + nombrePlanta + " hace " + regado + " días.";
-//         // alert(seRiega);
-//     } else if (regado > 0) {
-//         seRiega = "Debe regar la planta " + nombrePlanta + " en " + regado + " días."
-//         // alert(seRiega);
-//     }
-
-//     const plantaUsuarioObjeto = new planta(plantausuario.nombre,plantausuario.tipo,plantausuario.riego,plantausuario.cultivo, seRiega )
-//     listadoplantasusuario.push(plantaUsuarioObjeto);
-//     }
-    
-
-// }
-
-// listadoplantasusuario.sort((a, b) => {
-//     if (a.name > b.name) {
-//         return 1;
-//     }
-//     if (a.name < b.name) {
-//         return -1;
-//     }
-
-//     return 0;
-// })
-
-// //Muestro un detalle final con toda la informacion
-// console.log(listadoplantasusuario)
-
-// for (const planta of catalogoplantas) {
-//     let contenedor = document.createElement("div");
-//     //Definimos el innerHTML del elemento con una plantilla de texto
-//     contenedor.innerHTML = `<h3> ID: ${planta.nombre}</h3>
-//                             <img src= "${planta.img}" alt="catálogo"`;
-//     document.body.appendChild(contenedor);
-// }
-
-
-// let paginas = document.getElementById('titulo');
-
-// paginas.innerText = 'Calculadora de Riego Profesional';
-// paginas.className = 'textocentrado text-danger';
-
-
-
-// console.log(paginas.innerHTML);
-
-// for (const pagina of paginas) {
-//     pagina.className = "textocentrado"
-// }
-// const content = element.innerHTML

@@ -22,34 +22,8 @@
     </div>
   </header>
   <main>
-    <h2 id="titulo"></h2>
-    <!-- <div id="hipervinculo" class="hipervinculos">
-      <ul>
-        <li class="pagina">Inicio
-        </li>
-        <li class="pagina">Galeria
-        </li>
-        <li class="pagina">Nosotros
-        </li>
-        <li class="pagina">Contacto
-        </li>
-        <li class="pagina">Importante
-        </li>
-      </ul>
-    </div>
-    <div id="contenedor1.2"> -->
-      <!--<h2 id="titu">Todos nuestros productos</h2> -->
-      <!-- <section id="catalogo">
-        <input id="nombre" type="number">
-        
-      </section>
-    </div>
-    <p>Nombre:<input id="nombre" type="text"></p>
-    <p>Edad:<input id="edad" type="number"></p>
-    <button id="btnPrincipal">Enter</button>
-    <form id="formulario">
-      <input class="text-danger" type="submit" value="Enviar">
-    </form> --> 
+    <h1 id="titulo">Calculadora de Riego</h1>
+    
     <div class="input-group mb-3">
       <label class="input-group-text" for="tipoPlanta">Seleccione el tipo de planta</label>
       <select class="form-select" id="tipoPlanta">
@@ -66,6 +40,7 @@
           </select>
         </div>
         <button id="crear">Crear</button>
+        <div id="modalConteiner" class="modal-conteiner"></div>
     <section id="catalogo" class="container">
     </section>
     <section id="riego" class="no-display">
@@ -90,18 +65,15 @@
       <input type="number" id="creardias" name="creardias" maxlength="2" size="5" required><br><br>
       <div class="input-group">
         <input type="file" class="form-control" id="crearimg" aria-describedby="inputGroupFileAddon04" aria-label="Upload">
-              <!-- <button class="btn btn-outline-secondary" type="button" id="crearimgbtn"></button> -->
+              <button class="btn btn-outline-secondary" type="button" id="crearimgbtn"></button>
       </div><br><br>
-      <button id="confirmarcrear" class="col-4 mb-5" size="15" >Ingresar planta</button>
+      <button id="confirmarcrear" class="mb-5" size="15" type="button">Ingresar planta</button>
     </form>
     </section>
     </main>
 <footer>
-
 </footer>
-  
-  <script src="./js/bootstrap.bundle.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   <script src="main.js"></script>
+  <script src="./js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
