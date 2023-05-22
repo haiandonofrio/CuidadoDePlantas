@@ -220,10 +220,11 @@ botonconfirmar.addEventListener('click', function (event) {
         let riego = document.getElementById('crearriego');
         let cultivo = document.getElementById('crearcultivo');
         let dias = document.getElementById('creardias');
-        let img = document.getElementById('crearimg');
+        // let img = document.getElementById('crearimg');
+        const imgbase = "plantbase.png";
         const form = document.getElementById('sectioncrear');
         form.className = "no-display";
-        const plantans = new planta(nombre.value,tipo,riego.value,cultivo.value,dias.value,img.value);
+        const plantans = new planta(nombre.value,tipo,riego.value,cultivo.value,dias.value,imgbase);
         
         const catalogoLS = JSON.parse(localStorage.getItem('catalogoplantas'));
         catalogoLS.push(plantans);

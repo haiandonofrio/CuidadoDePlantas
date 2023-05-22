@@ -64,9 +64,10 @@
       <label for="creardias">Indique cada cuantos días riega su planta normalmente</label><br>
       <input type="number" id="creardias" name="creardias" maxlength="2" size="5" required><br><br>
       <div class="input-group">
-        <input type="file" class="form-control" id="crearimg" aria-describedby="inputGroupFileAddon04" aria-label="Upload">
+        <input disabled type="file" class="form-control" id="crearimg" aria-describedby="filehelp" aria-label="Upload">
               <button class="btn btn-outline-secondary" type="button" id="crearimgbtn"></button>
-      </div><br><br>
+      </div>
+      <div id="filehelp" class="form-text">Esta opción está deshabilitada actualmente</div><br><br>
       <button id="confirmarcrear" class="mb-5" size="15" type="button">Ingresar planta</button>
     </form>
     </section>
