@@ -21,19 +21,33 @@ class nuevaplanta {
     }
 }
 ///////////DECLARACIONES/
-let catalogoplantas = [
-    new planta("Cacao", "interior", "fertilizante", "sustrato", 7, 'cacao.jpg'),
-    new planta("Menta", "interior", "fertilizante", "hidro", 10, 'menta.png'),
-    new planta("Tulipan", "exterior", "agua", "tierra", 5, 'tulipan.jfif'),
-    new planta("Girasol", "interior", "fertilizante", "sustrato", 7 , 'girasol.jfif'),
-    new planta("Rosa", "exterior", "agua", "tierra", 5, 'rosa.jfif'),
-    new planta("Margarita", "exterior", "agua", "tierra", 5, 'margarita.jfif'),
-]
+// let catalogoplantas = [
+//     new planta("Cacao", "interior", "fertilizante", "sustrato", 7, 'cacao.jpg'),
+//     new planta("Menta", "interior", "fertilizante", "hidro", 10, 'menta.png'),
+//     new planta("Tulipan", "exterior", "agua", "tierra", 5, 'tulipan.jfif'),
+//     new planta("Girasol", "interior", "fertilizante", "sustrato", 7 , 'girasol.jfif'),
+//     new planta("Rosa", "exterior", "agua", "tierra", 5, 'rosa.jfif'),
+//     new planta("Margarita", "exterior", "agua", "tierra", 5, 'margarita.jfif'),
+// ]
 
+let catalogoplantas = [];
 const catalogoLS = JSON.parse(localStorage.getItem('catalogoplantas'));
 if (catalogoLS) {
     catalogoplantas = catalogoLS;
-};
+} else {
+        const url = "./plantas.json";
+        fetch(url)
+            .then((res) => res.json())
+            .then((data) => {
+                data.forEach((producto) => {
+                    console.log(producto);
+                });
+            })
+            .catch((error) => {
+                console.error('Error fetching the JSON file:', error);
+            });
+}
+;
 ////////FUNCIONES/
 
 function calculadora(dia, plantausuario) {
@@ -174,7 +188,7 @@ function filter(e) {
 }
 
 ///////////EVENTOS/
-const inputplanta     = document.getElementById("tipoPlanta")
+const inputplanta     =     document.getElementById("tipoPlanta")
     inputplanta.addEventListener("input", () => {
         sessionStorage.setItem("tipoPlanta", inputplanta.value)
     
@@ -230,22 +244,27 @@ botonconfirmar.addEventListener('click', function (event) {
         catalogoLS.push(plantans);
         localStorage.setItem('catalogoplantas', JSON.stringify(catalogoLS));
 
-        // Esto sera un alert luego 
-        const modalConteiner = document.getElementById("modalConteiner");
-        modalConteiner.innerHTML="";
-        modalConteiner.style.display = "flex";
-        const modalPlanta = document.createElement("div");
-        modalPlanta.className = "modal-carrito";
-        modalPlanta.innerHTML =`<h2 class="modal-carrito-text">Su planta se ha creado exitosamente</h2>`
-        modalConteiner.append(modalPlanta);
+    //     // Esto sera un alert luego
+    //     const modalConteiner = document.getElementById("modalConteiner");
+    //     modalConteiner.innerHTML="";
+    //     modalConteiner.style.display = "flex";
+    //     const modalPlanta = document.createElement("div");
+    //     modalPlanta.className = "modal-carrito";
+    //     modalPlanta.innerHTML =`<h2 class="modal-carrito-text">Su planta se ha creado exitosamente</h2>`
+    //     modalConteiner.append(modalPlanta);
 
-    //////// booton
-        const boton = document.createElement("h1");
-        boton.innerText = "X";
-        boton.className = "boton-x";
-        boton.addEventListener ("click", () =>{
-            modalConteiner.style.display= "none";
-        })
-        modalPlanta.append(boton);
+    // //////// booton
+    //     const boton = document.createElement("h1");
+    //     boton.innerText = "X";
+    //     boton.className = "boton-x";
+    //     boton.addEventListener ("click", () =>{
+    //         modalConteiner.style.display= "none";
+    //     })
+    //     modalPlanta.append(boton);
+            Swal.fire({
+                text: 'Su planta se ha creado exitosamente',
+                icon: 'success',
+                confirmButtonText: 'Cool',
+    })
     }
 } );
