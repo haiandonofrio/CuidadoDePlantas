@@ -21,14 +21,6 @@ class nuevaplanta {
     }
 }
 ///////////DECLARACIONES/
-// let catalogoplantas = [
-//     new planta("Cacao", "interior", "fertilizante", "sustrato", 7, 'cacao.jpg'),
-//     new planta("Menta", "interior", "fertilizante", "hidro", 10, 'menta.png'),
-//     new planta("Tulipan", "exterior", "agua", "tierra", 5, 'tulipan.jfif'),
-//     new planta("Girasol", "interior", "fertilizante", "sustrato", 7 , 'girasol.jfif'),
-//     new planta("Rosa", "exterior", "agua", "tierra", 5, 'rosa.jfif'),
-//     new planta("Margarita", "exterior", "agua", "tierra", 5, 'margarita.jfif'),
-// ]
 
 let catalogoplantas = [];
 const catalogoLS = JSON.parse(localStorage.getItem('catalogoplantas'));
