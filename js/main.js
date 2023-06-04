@@ -10,19 +10,8 @@ class planta {
     }
 }
 
-class nuevaplanta {
-    constructor(nombre, tipo, riego, cultivo, dias, img) {
-        this.nombre = nombre;
-        this.tipo = tipo;
-        this.riego = riego;
-        this.cultivo = cultivo;
-        this.dias = dias;
-        this.img = img;
-    }
-}
 ///////////DECLARACIONES/
 var DateTime = luxon.DateTime;
-
 
 let catalogoplantas = [];
 //Si existe catalogo guardado utilizo ese sino lo obtengo del archivo json
@@ -45,7 +34,7 @@ if (catalogoLS) {
 }
 ;
 ////////FUNCIONES/
-
+//Calculo la cantidad de dias para regar la planta en base a la fecha ingresada y el dia de hoy
 function calculadora(dia, plantausuario) {
     const hoy = DateTime.now();
     hoy.toLocaleString();
@@ -105,7 +94,7 @@ function calculadora(dia, plantausuario) {
     }
     
 
-
+//Filtro segun lo seleccionado por el usuario para mostrar las plantas dinamicamente
 function filter(e) {
     $("#sectioncrear").addClass("no-display");
     let filterlog;
