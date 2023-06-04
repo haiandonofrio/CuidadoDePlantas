@@ -144,8 +144,9 @@ function filter(e) {
                     catalogoLS.splice(catalogoLS.findIndex(a => a.nombre === planta.nombre) , 1)
                     localStorage.setItem('catalogoplantas', JSON.stringify(catalogoLS));
                     catalogo = catalogoLS;
-                    const riego = document.getElementById("riego");
-                    riego.classList.add("no-display");
+                    // const riego = document.getElementById("riego");
+                    // riego.classList.add("no-display");
+                    $("#riego").addClass("no-display");
                 }
             });
             botonriego[planta.nombre.toLowerCase()] = document.getElementById(planta.nombre.toLowerCase());
@@ -155,21 +156,18 @@ function filter(e) {
                     $("#parrafo").remove();
                     }
                     const planta = catalogoplantas.find((p) => p.nombre === event.target.id)
-                    let riegonombre = document.getElementById('riegonombre');
-                    riegonombre.innerHTML = `${planta.nombre}`;
-                    let riegoriego = document.getElementById('riegoriego');
-                    riegoriego.innerHTML = `${planta.riego}`;
-                    let riegodias = document.getElementById('riegodias');
-                    riegodias.innerHTML = `Se riega cada ${planta.dias} días`;
-                    let sectionriego = document.getElementById('riego');
-                    sectionriego.classList.remove('no-display')
+                    $("#riegonombre").text(`${planta.nombre}`);
+                    $("#riegoriego").text(`${planta.riego}`);
+                    $("#riegodias").text(`Se riega cada ${planta.dias} días`);
+                    $("#riego").removeClass('no-display')
                     sessionStorage.setItem("CalculoPlanta", event.target.id)
                     let posicion2 = $("#riegonombre").offset().top;
+                    //Calendario para fechas
                     jSuites.calendar(document.getElementById('riegoinput'),{
                     format: 'DD/MM/YYYY',
                         time: true,
-                    
                     });
+
                     $("#riegoinput").on('onchange', function(e) {
                         console.log('New value: ' + e.target.value);
                         $("#riegoinput").val() = e.target.value;
@@ -187,18 +185,14 @@ function filter(e) {
 }
 
 ///////////EVENTOS/
-const inputplanta     =     document.getElementById("tipoPlanta")
-    inputplanta.addEventListener("input", () => {
-        sessionStorage.setItem("tipoPlanta", inputplanta.value)
-    
+    $("#tipoPlanta").on("input", () => {
+        sessionStorage.setItem("tipoPlanta",$("#tipoPlanta").val() )
     });
 
-const botonfilter = document.getElementById('filter');
 
-botonfilter.addEventListener('click', filter);
+$("#filter").on('click', filter);
 
-const botonriego = document.getElementById('btnriego');
-botonriego.addEventListener('click', function (event) {
+$("#btnriego").on('click', function (event) {
         $("#sectioncrear").addClass("no-display");
         let nombrePlanta = sessionStorage.getItem('CalculoPlanta');
         const plantausuario = catalogoplantas.find((p) => p.nombre === nombrePlanta);
@@ -217,9 +211,8 @@ botonriego.addEventListener('click', function (event) {
     localStorage.setItem('crearPlanta', $("#crearPlanta").val());
 });
 
-const botonconfirmar = document.getElementById('confirmarcrear');
 
-botonconfirmar.addEventListener('click', function (event) {
+$("#confirmarcrear").on('click', function (event) {
     if (event.target.tagName.toLowerCase() === 'button') {
         let tipo = localStorage.getItem('crearPlanta');
         const imgbase = "plantbase.png";
@@ -236,4 +229,8 @@ botonconfirmar.addEventListener('click', function (event) {
                 toast: true,
     })
     }
-} );
+});
+
+$("#cancelarcrear").on("click", function () {
+    $("#sectioncrear").addClass("no-display");
+})
