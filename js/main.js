@@ -47,8 +47,6 @@ if (catalogoLS) {
 ////////FUNCIONES/
 
 function calculadora(dia, plantausuario) {
-    // const date = new Date();
-    // let hoy = parseInt(date.getDate());
     const hoy = DateTime.now();
     hoy.toLocaleString();
     const Interval = luxon.Interval
@@ -77,73 +75,38 @@ function calculadora(dia, plantausuario) {
     }
     let resultado = 0;
     if (diff == 0) {
-        // return(plantausuario.dias);
         resultado = plantausuario.dias;
     } else {
 
-         resultado = plantausuario.dias - diff;
-        // if (resultado == plantausuario.dias) {
-        //     resultado = 0;
-                
-        // } else if (resultado < plantausuario.dias) {
-        //     resultado = plantausuario.dias - resultado;
-        // } else if (resultado > plantausuario.dias) {
-        //     resultado = plantausuario.dias - resultado;
-        // } else if (dia > hoy) {
-        //     resultado = (31 - dia) + hoy - plantausuario.dias;
-        //     resultado = resultado * (-1);
-        // }
+    resultado = plantausuario.dias - diff;
 
     }
             
-        // let parrafo = document.getElementById("parrafo");
-        // if (parrafo != null) {
-        //     parrafo.remove();
-        // };
     if ($("#parrafo")) {
         $("#parrafo").remove();
         }
 
-            // Esto sera un alert luego
-        // const modalConteiner = document.getElementById("modalConteiner");
-        // $("#modalConteiner").html("");
-        // $("#modalConteiner").css("style" ,"flex");
-        // const modalPlanta = document.createElement("div");
-        // modalPlanta.className = "modal-carrito";}
     let riego;
         if (resultado == 0) {
             riego = `Debe regar ${plantausuario.nombre} hoy.`;
         } else if (resultado < 0) {
             resultado = resultado * (-1);
-           riego = `Debió regar ${plantausuario.nombre} hace ${resultado} días.`;
+            riego = `Debió regar ${plantausuario.nombre} hace ${resultado} días.`;
         } else if (resultado > 0) {
             riego = `Debe regar ${plantausuario.nombre} en ${resultado} días.`;
         }
-    // $("#modalConteiner").append(modalPlanta);
 
-            Swal.fire({
+        Swal.fire({
         title: 'Cuidado de Plantas',
         text: riego,
         icon: 'info',
         confirmButtonText: 'Confirmar'
         })
-    
-
-    //////// booton
-        // const boton = document.createElement("h1");
-        // boton.innerText = "X";
-        // boton.className = "boton-p";
-        // boton.addEventListener ("click", () =>{
-        //     modalConteiner.style.display= "none";
-        // })
-        // modalPlanta.append(boton);
     }
     
 
 
 function filter(e) {
-    // let sectioncrear = document.getElementById('sectioncrear');
-    // sectioncrear.classList.add('no-display');
     $("#sectioncrear").addClass("no-display");
     let filterlog;
     let botonriego = {};            
@@ -199,11 +162,6 @@ function filter(e) {
             botonriego[planta.nombre.toLowerCase()] = document.getElementById(planta.nombre.toLowerCase());
             botonriego[planta.nombre.toLowerCase()].addEventListener('click', function (event){
                 if (event.target.tagName.toLowerCase() === 'button') {
-
-                    // let parrafo = document.getElementById("parrafo");
-                    // if (parrafo != null) {
-                    //     parrafo.remove();
-                    // };
                     if ($("#parrafo")) {
                     $("#parrafo").remove();
                     }
@@ -223,7 +181,6 @@ function filter(e) {
                         time: true,
                     
                     });
-                    // $("#riegoinput").val() = calendar.getValue();
                     $("#riegoinput").on('onchange', function(e) {
                         console.log('New value: ' + e.target.value);
                         $("#riegoinput").val() = e.target.value;
@@ -253,13 +210,9 @@ botonfilter.addEventListener('click', filter);
 
 const botonriego = document.getElementById('btnriego');
 botonriego.addEventListener('click', function (event) {
-        // let sectioncrear = document.getElementById('sectioncrear');
-        // sectioncrear.classList.add('no-display');
         $("#sectioncrear").addClass("no-display");
         let nombrePlanta = sessionStorage.getItem('CalculoPlanta');
-        // let dia = document.getElementById('riegoinput');
         const plantausuario = catalogoplantas.find((p) => p.nombre === nombrePlanta);
-        // calculadora(dia.value, plantausuario);
     calculadora($("#riegoinput").val(), plantausuario);
 
     });
@@ -267,22 +220,11 @@ botonriego.addEventListener('click', function (event) {
     const botoncrear = document.getElementById('crear');
     
     botoncrear.addEventListener('click', function (event) {
-    // let sectioncrear = document.getElementById('sectioncrear');
-    // sectioncrear.classList.remove('no-display');
     $("#sectioncrear").removeClass("no-display");
-    // let sectionriegoini = document.getElementById('riego');
-    // sectionriegoini.classList.add('no-display');
     $("#riego").addClass("no-display");
     let posicion = $("#sectioncrear").offset().top;
     $("html, body").animate({ scrollTop: posicion }, 100);
-    // let divdelete = document.getElementsByClassName("filter");
-    // const divlenght = divdelete.length;
-    // for (let i = 0; i < divlenght; i++) {
-    //     divdelete[0].remove();
-    // }
     $("#catalogo").empty();
-    // let creartipo = document.getElementById('crearPlanta');
-    // localStorage.setItem('crearPlanta', creartipo.value);
     localStorage.setItem('crearPlanta', $("#crearPlanta").val());
 });
 
@@ -291,39 +233,13 @@ const botonconfirmar = document.getElementById('confirmarcrear');
 botonconfirmar.addEventListener('click', function (event) {
     if (event.target.tagName.toLowerCase() === 'button') {
         let tipo = localStorage.getItem('crearPlanta');
-        // let nombre = document.getElementById('crearnombre');
-        // let riego = document.getElementById('crearriego');
-        // let cultivo = document.getElementById('crearcultivo');
-        // let dias = document.getElementById('creardias');
-        // let img = document.getElementById('crearimg');
         const imgbase = "plantbase.png";
-        // const form = document.getElementById('sectioncrear');
-        // form.className = "no-display";
         $("#sectioncrear").addClass("no-display");
-        // const plantans = new planta(nombre.value,tipo,riego.value,cultivo.value,dias.value,imgbase);
         const plantans = new planta($("#crearnombre").val(),tipo,$("#crearriego").val(),$("#crearcultivo").val(),$("#creardias").val(),imgbase);
         
         const catalogoLS = JSON.parse(localStorage.getItem('catalogoplantas'));
         catalogoLS.push(plantans);
         localStorage.setItem('catalogoplantas', JSON.stringify(catalogoLS));
-
-    //     // Esto sera un alert luego
-    //     const modalConteiner = document.getElementById("modalConteiner");
-    //     modalConteiner.innerHTML="";
-    //     modalConteiner.style.display = "flex";
-    //     const modalPlanta = document.createElement("div");
-    //     modalPlanta.className = "modal-carrito";
-    //     modalPlanta.innerHTML =`<h2 class="modal-carrito-text">Su planta se ha creado exitosamente</h2>`
-    //     modalConteiner.append(modalPlanta);
-
-    // //////// booton
-    //     const boton = document.createElement("h1");
-    //     boton.innerText = "X";
-    //     boton.className = "boton-x";
-    //     boton.addEventListener ("click", () =>{
-    //         modalConteiner.style.display= "none";
-    //     })
-    //     modalPlanta.append(boton);
             Swal.fire({
                 text: 'Su planta se ha creado exitosamente',
                 icon: 'success',
