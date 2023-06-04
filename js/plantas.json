@@ -1,50 +1,50 @@
 [
-{
-   "nombre": "Cacao",
-   "tipo": "interior",
-   "riego": "fertilizante",
-   "cultivo": "sustrato",
-   "dias":  "7",
-   "img": "cacao.jpg"
-},
-{
-   "nombre": "Menta",
-   "tipo": "interior",
-   "riego": "fertilizante",
-   "cultivo": "hidro",
-   "dias":  "10",
-   "img": "menta.png"
-},  
-{
-   "nombre": "Tulipan",
-   "tipo": "exterior",
-   "riego": "agua",
-   "cultivo": "tierra",
-   "dias":  "5",
-   "img": "tulipan.jfif"
-},  
-{
-   "nombre": "Girasol",
-   "tipo": "interior",
-   "riego": "fertilizante",
-   "cultivo": "sustrato",
-   "dias":  "7",
-   "img": "girasol.jfif"
-},  
-{
-   "nombre": "Rosa",
-   "tipo": "exterior",
-   "riego": "agua",
-   "cultivo": "tierra",
-   "dias":  "5",
-   "img": "rosa.jfif"
-},  
-{
-   "nombre": "Margarita",
-   "tipo": "exterior",
-   "riego": "agua",
-   "cultivo": "tierra",
-   "dias":  "5",
-   "img": "margarita.jfif"
-}
+  {
+    "nombre": "cacao",
+    "tipo": "interior",
+    "riego": "fertilizante",
+    "cultivo": "sustrato",
+    "dias": 7,
+    "img": "cacao.jpg"
+  },
+  {
+    "nombre": "menta",
+    "tipo": "interior",
+    "riego": "fertilizante",
+    "cultivo": "hidro",
+    "dias": 10,
+    "img": "menta.png"
+  },
+  {
+    "nombre": "tulipan",
+    "tipo": "exterior",
+    "riego": "agua",
+    "cultivo": "tierra",
+    "dias": 5,
+    "img": "tulipan.jfif"
+  },
+  {
+    "nombre": "girasol",
+    "tipo": "interior",
+    "riego": "fertilizante",
+    "cultivo": "sustrato",
+    "dias": 7,
+    "img": "girasol.jfif"
+  },
+  {
+    "nombre": "rosa",
+    "tipo": "exterior",
+    "riego": "agua",
+    "cultivo": "tierra",
+    "dias": 5,
+    "img": "rosa.jfif"
+  },
+  {
+    "nombre": "margarita",
+    "tipo": "exterior",
+    "riego": "agua",
+    "cultivo": "tierra",
+    "dias": 5,
+    "img": "margarita.jfif"
+  }
 ]
