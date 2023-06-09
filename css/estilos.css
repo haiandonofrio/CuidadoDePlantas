@@ -79,6 +79,7 @@ p, label, button{
 .color {
     font-size: 20px;
     color : blue;
+    text-align: center;
 
 }
 .head{

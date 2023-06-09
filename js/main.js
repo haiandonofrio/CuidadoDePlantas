@@ -167,6 +167,8 @@ function filter(e) {
                     format: 'DD/MM/YYYY',
                         time: true,
                     });
+                    const ultRiego = localStorage.getItem(`${planta.nombre}UltRiego`);
+                    ultRiego ? $("#riegoinput").val(ultRiego) : $("#riegoinput").val(' ');
 
                     $("#riegoinput").on('onchange', function(e) {
                         console.log('New value: ' + e.target.value);
@@ -193,11 +195,11 @@ function filter(e) {
 $("#filter").on('click', filter);
 
 $("#btnriego").on('click', function (event) {
-        $("#sectioncrear").addClass("no-display");
-        let nombrePlanta = sessionStorage.getItem('CalculoPlanta');
-        const plantausuario = catalogoplantas.find((p) => p.nombre === nombrePlanta);
+    $("#sectioncrear").addClass("no-display");
+    let nombrePlanta = sessionStorage.getItem('CalculoPlanta');
+    const plantausuario = catalogoplantas.find((p) => p.nombre === nombrePlanta);
     calculadora($("#riegoinput").val(), plantausuario);
-
+    localStorage.setItem(`${nombrePlanta}UltRiego`, $("#riegoinput").val());
     });
 
     const botoncrear = document.getElementById('crear');
